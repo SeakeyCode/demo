@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="sea.js"></script>
+</head>
+<body>
+  <script>
+    seajs.use(['mod1.js', 'mod2.js'], function (modle1, modle2) {
+      console.log(modle1, modle2)
+    })
+  </script>
+</body>
+</html>
