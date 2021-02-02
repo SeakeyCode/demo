@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      有一个高度自适应的 div，里面有两个 div，一个高度
+      100px，如何让另一个填满剩下的高度 ？
+    </title>
+  </head>
+  <body>
+    <div style="position: relative; height: auto; background-color: green">
+      <div style="height: 100px; background-color: red"></div>
+      <div
+        style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          right: 0;
+          background-color: royalblue;
+        "
+      ></div>
+    </div>
+  </body>
+</html>

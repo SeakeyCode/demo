@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      .list-wrap {
+        padding: 60px;
+      }
+      .list-item-wrap {
+        border-left: 1px solid #000;
+        padding: 4px 0 2px 10px;
+        cursor: move;
+      }
+      .list-item-wrap.top {
+        border-left: none;
+      }
+      .show-child-button {
+        width: 12px;
+        display: inline-block;
+        text-align: center;
+        cursor: pointer;
+      }
+      .top-flage {
+        border-top: 2px dashed;
+      }
+      .below-flage {
+        border-bottom: 2px dashed;
+      }
+      .draged-dom {
+        background-color: #eee;
+      }
+      .target-dom {
+        background-color: #eee;
+      }
+    </style>
+  </head>
+  <body>
+    <div id='root'><div>
+    <script type="text/babel">
+      const topDomeTimeSpeed = 600;
+
+      function createData(number = 20)  {
+        const res = [];
+        if (number < 1) {
+          return res;
+        }
+        for (let i = 0; i < number; i++) {
+          const hasChild = ((Math.round(Math.random() * 10))) < 3;
+          if (hasChild) {
+            res.push({
+              id: Math.round(Math.random() * 10),
+              text: (Math.random() * 10).toString(16),
+              child: createData(Math.round((number * Math.random()))),
+            });
+          } else {
+            res.push({
+              id: Math.round(Math.random() * 1000000),
+              text: (Math.random() * 10).toString(16),
+              child: [],
+            });
+          }
+        }
+        return res;
+      }
+      class DrageList extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            listData: [],
+          };
+
+        }
+
+        componentDidMount() {
+          let data =  localStorage.getItem('data') || JSON.stringify(createData());
+          if (!localStorage.getItem('data')) {
+            localStorage.setItem('data', data);
+          }
+          this.setState({ listData: JSON.parse(data) });
+          const listWrap = document.querySelector('#listWrap');
+          listWrap && listWrap.addEventListener('dragstart', this.dragstartListItem);
+          listWrap && listWrap.addEventListener('dragover', this.dragoverListItem);
+          listWrap && listWrap.addEventListener('dragenter', this.dragenterListItem);
+          listWrap && listWrap.addEventListener('dragleave', this.dragleaveListItem);
+          listWrap && listWrap.addEventListener('drop', this.dropListItem);
+        }
+        componentWillUnmount() {
+          const listWrap = document.querySelector('#listWrap');
+          listWrap && listWrap.removeEventListener('dragstart', this.dragstartListItem);
+          listWrap && listWrap.removeEventListener('dragover', this.dragoverListItem);
+          listWrap && listWrap.removeEventListener('dragenter', this.dragenterListItem);
+          listWrap && listWrap.removeEventListener('dragleave', this.dragleaveListItem);
+          listWrap && listWrap.removeEventListener('drop', this.dropListItem);
+        }
+        dragstartListItem = e => {
+          this.dragged = e.target;
+        }
+        dragoverListItem = e => {
+          e.preventDefault();
+        }
+
+        dragenterListItem = e => {
+          // true在上面，false在下面
+          const relativePosition = this.getRelativePosition(e);
+          const target = e.target;
+          const targetClass = e.target.classList;
+
+          if (target != this.topDomTemp) {
+            if (this.topDomeTime) {
+              clearTimeout(this.topDomeTime);
+            }
+            this.topDomeTime = undefined;
+            this.topDomTemp = target;
+          }
+          // 此时还未设置类名
+          if (targetClass.contains('parent-wrap') && !relativePosition) {
+            this.topDomeTime = setTimeout(() => {
+              this.setClose(target);
+            }, topDomeTimeSpeed);
+          }
+          if (targetClass.contains('parent-wrap')) {
+            const close = target.dataset.close == 'true';
+            if (!close) {
+              return false;
+            }
+          }
+          targetClass.add('draged-dom');
+          if (relativePosition) {
+            targetClass.remove('below-flage');
+            targetClass.add('top-flage');
+          } else {
+            targetClass.remove('top-flage');
+            targetClass.add('below-flage');
+          }
+        }
+        dragleaveListItem = e => {
+          e.target.classList.remove('top-flage');
+          e.target.classList.remove('below-flage');
+          e.target.classList.remove('draged-dom');
+        }
+        dropListItem = e => {
+          // 阻止默认动作（如打开一些元素的链接，如图片啥的）【其实这里可以不要的说】
+          event.preventDefault();
+          if (!this.dragged) {
+            return false;
+          }
+          const sourcePath = this.dragged.dataset.id && JSON.parse(this.dragged.dataset.id);
+          const targetPath = e.target.dataset.id && JSON.parse(e.target.dataset.id);
+          // true 在上， false 在下面
+          const relativePosition = e.target.classList.contains('top-flage');
+          this.changeData(sourcePath, targetPath, relativePosition);
+          e.target.classList.remove('top-flage');
+          e.target.classList.remove('below-flage');
+          e.target.classList.remove('draged-dom');
+          this.dragged = undefined;
+        }
+        changeData = (sourcePath, targetPath, relativePosition) => {
+          // 可以只判断最后的一个数字，取和删除的顺序要变化一下
+          const { listData } = this.state;
+          const sourceData = this.accessSouceData(listData, sourcePath);
+          const targetIndex = this.getDataIndex(targetPath);
+          const sourceIndex = this.getDataIndex(sourcePath);
+          const targetPathLength = targetPath.length;
+          const sourcePathLength = sourcePath.length;
+          // sourceData.target = true;
+          if (targetIndex < 0 || sourceIndex < 0 || !sourceData) {
+            console.error('Element get error');
+            return false;
+          }
+
+          if (sourcePathLength > targetPathLength || (sourcePathLength == targetPathLength && sourceIndex >= targetIndex)) {
+            // 从后往前插入，先删除后插入
+            this.accessSouceData(listData, sourcePath, 'delete');
+            this.insertData(targetPath, targetPathLength, relativePosition, listData, sourceData);
+          }
+          if (sourcePathLength < targetPathLength || (sourcePathLength == targetPathLength && sourceIndex < targetIndex)) {
+            // 从前往后插入，先插入后删除
+            this.insertData(targetPath, targetPathLength, relativePosition, listData, sourceData);
+            this.accessSouceData(listData, sourcePath, 'delete');
+          }
+          this.setState({ listData });
+        }
+        insertData = (targetPath, targetPathLength, relativePosition, listData, sourceData) => {
+            targetPath.reduce((res, item, index) => {
+              if (res.length == 0) {
+                return res;
+              }
+              const { index: indexByItem, id } = item;
+              if ((index + 1) == targetPathLength) {
+                const { id: idByIndex = -1 } = res[indexByItem];
+                if (idByIndex == id) {
+                  const insertIndex = relativePosition ? indexByItem : indexByItem * 1 + 1;
+                  res.splice(insertIndex, 0, sourceData);
+                }
+              }
+              return res[indexByItem].child || [];
+            }, listData);
+        }
+        accessSouceData = (listData, sourcePath, mode = 'get') => {
+          // const { listData } = this.state;
+          const sourcePathLength = sourcePath.length;
+          let resdata = undefined;
+          sourcePath.reduce((res, item, index) => {
+            if (res.length == 0) {
+              return res;
+            }
+            const { index: indexByItem, id } = item;
+            if ((index + 1) == sourcePathLength) {
+              const { id: idByIndex = -1 } = res[indexByItem];
+              if (idByIndex == id) {
+                if (mode == 'get') {
+                  resdata = res[indexByItem];
+                } else {
+                  res.splice(indexByItem, 1);
+                }
+              }
+            }
+            return (res[indexByItem] && res[indexByItem].child) || [];
+          }, listData);
+          if (mode == 'get') {
+            return resdata;
+          }
+        }
+        getDataIndex = data => {
+          const dataLength = data.length;
+          const { index = -1 } =   data[dataLength - 1] || {};
+          return index;
+        }
+        setClose = e => {
+          const deepData = e.dataset.id && JSON.parse(e.dataset.id);
+          const close = e.dataset.close == 'true';
+          if (close) {
+            e.classList.remove('below-flage');
+            e.classList.remove('draged-dom');
+            this.clickShowButton(deepData, close)
+          }
+        }
+        getRelativePosition = e => {
+          const offsetY = e.offsetY;
+          const offsetHeight = e.target.offsetHeight;
+
+          return (offsetY  / offsetHeight) < 0.5;
+        }
+        clickShowButton = (fatherIdsTemp, close) => {
+          const { listData } = this.state;
+          const fatherIdsTempLength = fatherIdsTemp.length;
+          fatherIdsTemp.reduce((res, item, index) => {
+            if (res.length == 0) {
+              return res;
+            }
+            const { index: indexByItem, id } = item;
+            const { id: idByIndex = -1 } = res[indexByItem];
+            if (idByIndex == id) {
+              if (close) {
+                res[indexByItem].close = false;
+              } else if ((index + 1) == fatherIdsTempLength) {
+                if (idByIndex == id) {
+                  res[indexByItem].close = true;
+                }
+              }
+            }
+
+            return res[indexByItem].child;
+          }, listData);
+          this.setState({ listData });
+        }
+        crearteList = (data = [], fatherIds = [], deep = 0) => {
+          const res = data.map((item, index) => {
+            const { id, text, child, close = true } = item;
+            let fatherIdsTemp = [ ...fatherIds ];
+            fatherIdsTemp.push({
+              id,
+              index,
+            });
+            if (child.length > 0) {
+              return (
+                <div
+                  key={id}
+                  data-id={JSON.stringify(fatherIdsTemp)}
+                  data-close={close}
+                  className={`list-item-wrap ${deep == 0 ? 'top' : ''} `}
+                  style={{ marginLeft: deep * 20 }}
+                  draggable="true"
+                >
+                  <div data-id={JSON.stringify(fatherIdsTemp)} className="parent-wrap" data-close={close} >
+                    <span onClick={() => this.clickShowButton(fatherIdsTemp, close)} className="show-child-button" >{close ? '+' : '-' }</span>
+                    {text + '-' + index}
+                  </div>
+                  {!close && this.crearteList(child, fatherIdsTemp, deep + 1)}
+                </div>);
+            }
+            return (
+                <div
+                  key={id}
+                  data-id={JSON.stringify(fatherIdsTemp)}
+                  data-close={close}
+                  className={`list-item-wrap ${deep == 0 ? 'top' : ''} `}
+                  style={{ marginLeft: deep * 20 }}
+                  draggable="true"
+                >
+                  {text}
+                </div>);
+          });
+          return res;
+        }
+        render() {
+          const { listData } = this.state;
+          // console.log('c', listData);
+          return (
+            <div className="list-wrap" id="listWrap" >
+              {this.crearteList(listData)}
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(
+        <DrageList />,
+        document.getElementById('root')
+      );
+    </script>
+  </body>
+</html>

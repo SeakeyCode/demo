@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax</title>
+</head>
+<body>
+    <script>
+        const xhr = new XMLHttpRequest()
+        xhr.open('GET', './data.json', true) // 异步
+        xhr.onreadystatechange = function () {
+            // 0 还未调用send方法
+            // 1 已经调用send方法，发送请求
+            // 2 已经接受到全部响应内容
+            // 3 正在解析响应内容
+            // 4 响应解析完成
+            if(xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    console.log(JSON.parse(xhr.responseText))
+                }
+            }
+        }
+        xhr.send(null)
+    </script>
+</body>
+</html>

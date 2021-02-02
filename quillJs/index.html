@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="test">
+      <span>**</span>
+      <div>456789132</div>
+      <span>*****</span>
+    </div>
+    <!-- Create the editor container -->
+    <div id="editor"></div>
+    <script>
+      var quill = new Quill('#editor', {
+        theme: 'bubble',
+      })
+      quill.pasteHTML(
+        0,
+        `   <div class="test">
+        <span>**</span>
+        <div>456789132</div>
+        <span>*****</span>
+    </div>`
+      )
+      console.log(quill)
+    </script>
+  </body>
+</html>

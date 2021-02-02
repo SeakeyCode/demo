@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="./jquery-1.8.3.min.js"></script>
+    <script>
+        function SaveData() {
+            $.ajax({
+                type: "get",
+                url: "http://127.0.0.1:5500/ajax/jsonp/getData.js",
+                dataType: "jsonp",
+                jsonpCallback: 'callback',
+                success: function (data) {
+                    console.log(data)
+                },
+                error: function (xhr, type) {
+                    console.log(xhr, type)
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <input type="button" id="btnAdd" value="Test" onclick="SaveData()" />
+    <script>
+        function aaa(val) {
+            console.log(val)
+        }
+    </script>
+    <script src="http://127.0.0.1:5500/ajax/jsonp/getData.js?callback=aaa"></script>
+</body>
+</html>

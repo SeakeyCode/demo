@@ -1,0 +1,40 @@
+.relative{
+    position:relative !important;
+}
+.absolute{
+    position:absolute !important;
+}
+.fixed{
+    position:fixed !important;
+}
+.t0{
+    top:0rem;
+}
+.l0{
+    left:0rem;
+}
+.r0{
+    right:0rem;
+}
+.b0{
+    bottom:0rem;
+}
+//position函数
+@positionList:1,2,3,4,5,6,7,8,9,10,15,20,24,30,40,48,50,75,80,90,100;
+.posi-loop(@list,@i:1,@val:extract(@list,@i)) when (length(@list)>=@i){
+    .t@{val}{
+        top:extract(@list,@i)/10rem;
+    }
+    .l@{val}{
+        left:extract(@list,@i)/10rem;
+    }
+    .r@{val}{
+        right:extract(@list,@i)/10rem;
+    }
+    .b@{val}{
+        bottom:extract(@list,@i)/10rem;
+    }
+    .posi-loop(@list,(@i+1));
+}
+.posi-loop(@positionList);
+

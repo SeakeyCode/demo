@@ -1,0 +1,19 @@
+{
+  "name": "webpack-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env NODE_TYPE=development webpack --progress --colors --config webpack.config.js --mode=development",
+    "build": "cross-env NODE_TYPE=production webpack --config webpack.config.js --mode=production"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "loader-utils": "^2.0.0",
+    "webpack": "^5.10.0",
+    "webpack-cli": "^4.2.0"
+  }
+}

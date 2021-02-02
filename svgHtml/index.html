@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.2/vue.min.js"></script>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" height="100%" width="100%">
+    <foreignobject x="0" y="0" width="415" height="203">
+        <div>111111</div>
+    </foreignobject>
+</svg>
+<img :src="avatarUrl2" alt="">
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            avatarUrl2: ''
+        },
+        mounted() {
+            const svgEle = document.querySelector('svg')
+            var canvas = document.createElement('canvas')
+            var context = canvas.getContext('2d')
+            context.drawImage(svgEle, 0, 0, 200, 200)
+            this.avatarUrl2 = canvas.toDataURL("image/png")
+            console.log(this.avatarUrl2)
+        },
+        methods: {
+            changeImg(e) {
+                const avatarFile = document.querySelector('#avatar').files[0]
+                var reader = new FileReader()
+                reader.readAsDataURL(avatarFile)
+                reader.onload = (e) => {
+                    var canvas = document.createElement('canvas')
+                    var context = canvas.getContext('2d')
+                    var image = new Image()
+                    image.src = e.target.result
+                    image.onload = () => {
+                        const originWidth = image.width
+                        const originHeight = image.height
+                        canvas.width = originWidth
+                        canvas.height = originHeight
+                        context.drawImage(image, 0, 0, canvas.width, canvas.height)
+                        var srcX = 0
+                        var srcY = 0
+                        var cutRec = 150
+                        if (originWidth > originHeight) {
+                            srcX = (originWidth - originHeight) / 2
+                            cutRec = originHeight
+                        } else if (originWidth < originHeight) {
+                            srcY = (originHeight - originWidth) / 2
+                            cutRec = originWidth
+                        }
+                        var dataImg = context.getImageData(srcX, srcY, cutRec, cutRec)
+                        var canvas2 = document.createElement('canvas')
+                        var context2 = canvas2.getContext('2d')
+                        canvas2.width = cutRec
+                        canvas2.height = cutRec
+                        context2.putImageData(dataImg, 0, 0, 0, 0, canvas2.width, canvas2.height)
+                        const images3 = canvas2.toDataURL("image/png")
+
+                        var canvas3 = document.createElement('canvas')
+                        var context3 = canvas3.getContext('2d')
+                        canvas3.width = 150
+                        canvas3.height = 150
+                        var img3 = new Image()
+                        img3.src = images3
+                        img3.onload = () => {
+                            context3.drawImage(img3, 0, 0, canvas3.width, canvas3.height)
+                            this.avatarUrl2 = canvas3.toDataURL("image/png")
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>

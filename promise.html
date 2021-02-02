@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise</title>
+</head>
+<body>
+    <script>
+        function Promise1(executor) {
+            var self = this;
+            self.status = 'pending'; 
+            self.data = undefined; 
+            self.onResolvedCallback = [];
+            self.onRejectedCallback = [];
+            function resolve(value) {
+                setTimeout(() => {
+                    if(self.status === 'pending') {
+                        self.status = 'resolved';
+                        self.data = value;
+                        for(var i = 0; i < self.onResolvedCallback.length; i++) {
+                            self.onResolvedCallback[i](value);
+                        }
+                    }
+                })
+            }
+            function reject(reason) {
+                setTimeout(() => {
+                    if(self.status === 'pending') {
+                        self.status = 'rejected';
+                        self.data = reason;
+                        for(var i = 0; i < self.onRejectedCallback.length; i++) {
+                            self.onRejectedCallback[i](reason);
+                        }
+                    }
+                })
+            }
+            try {
+                executor(resolve, reject);
+            } catch (e){
+                reject(e);
+            }
+        };
+        Promise1.prototype.then = function (onResolve, onReject) {
+            this.onResolvedCallback.push(onResolve);
+            this.onRejectedCallback.push(onReject);
+        };
+        const promise = new Promise1((resolve) => {
+            setTimeout(() => {
+                resolve('1111111');
+            }, 2000)
+        });
+        promise.then((a) => console.log(a));
+    </script>
+</body>
+</html>

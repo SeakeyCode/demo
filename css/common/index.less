@@ -1,0 +1,92 @@
+@import './gloState.less';
+@import './background.less';
+@import './border.less';
+@import './color.less';
+@import './flex.less';
+@import './fontSize.less';
+@import './margin.less';
+@import './padding.less';
+@import './heightWidth.less';
+@import './position.less';
+@import './1px.less';
+//样式入口文件
+//html文件里面需要加上一段更改比例的js代码，定义10px为1rem
+//  document.documentElement.style.fontSize = window.innerWidth / 37.5 + 'px';//设置页面像素级别
+
+body,html{
+    width:100%;
+    height:100%;
+}
+*{
+    padding:0px;
+    margin:0px;
+    list-style:none;
+    box-sizing:border-box;
+}
+.bold{
+    font-weight:bold;
+}
+.textL{
+    text-align:left;
+}
+.textC{
+    text-align:center;
+}
+.textR{
+    text-align:right;
+}
+.ofh{
+    overflow:hidden;
+}
+.lf{
+    float:left;
+}
+.rt{
+    float:right;
+}
+.borderbox{
+    box-sizing:border-box;
+}
+.block{
+    display:block;
+}
+.inline{
+    display:inline-block;
+}
+.clear{
+    &:after{
+        content:' ';
+        clear:both;
+        display: block; 
+        height: 0px;
+        width:0px;
+    }
+}
+//兼容ios滚动模型
+.scrollView{
+    overflow-y:scroll;
+    -webkit-overflow-scrolling: touch;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+//点击背景样式
+.activeBg{
+    position:relative;
+    overflow:hidden;
+    &:after {
+        content: "";
+        background: rgba(0,0,0,0.4);
+        position:absolute;
+        top:0px;
+        left:0px;
+        width:100%;
+        height:100%;
+        opacity: 0;
+        // transition: all 0.5s ease-in-out;
+    }
+    &:active:after {
+        opacity: 0.4;
+        // transition: 0s;
+    }
+}

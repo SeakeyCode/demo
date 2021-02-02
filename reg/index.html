@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>11</div>
+    <script>
+      var text = 'ss sss@example1.org 111 sss@d@d@example2.org'.replace(/([a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(@)[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+(?![-_]))/, (word) => {
+        console.log(word)
+        console.dir(RegExp)
+        return `<a href="${word}">${word}</a>`
+      })
+      console.log(text)
+    </script>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\nate\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add babylon babel-tarverse babel-generator
+
+PATH: 
+  C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;C:\Users\nate\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\TortoiseGit\bin;C:\Go\bin;C:\Users\nate\.windows-build-tools\python27\;C:\Users\nate\AppData\Local\Microsoft\WindowsApps;C:\Users\nate\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\nate\AppData\Roaming\npm;C:\Users\nate\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\nate\AppData\Local\Microsoft\WindowsApps;C:\Users\nate\go\bin
+
+Yarn version: 
+  1.22.4
+
+Node version: 
+  12.18.3
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/babel-tarverse: Not found
+      at Request.params.callback [as _callback] (C:\Users\nate\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66987:18)
+      at Request.self.callback (C:\Users\nate\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140748:22)
+      at Request.emit (events.js:315:20)
+      at Request.<anonymous> (C:\Users\nate\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141720:10)
+      at Request.emit (events.js:315:20)
+      at IncomingMessage.<anonymous> (C:\Users\nate\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141642:12)
+      at Object.onceWrapper (events.js:421:28)
+      at IncomingMessage.emit (events.js:327:22)
+      at endReadableNT (_stream_readable.js:1220:12)
+      at processTicksAndRejections (internal/process/task_queues.js:84:21)
+
+npm manifest: 
+  {
+    "name": "babel",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

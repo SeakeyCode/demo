@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>没有BUG</title>
+</head>
+<body>
+    <script>
+        function a () {
+            class b {
+                constructor(y) {
+                    this.y = y
+                    this.s = [1,2,3,4,5,6,7,8,9].map(n => Math.pow(2, n)).sort((a, b) => a > b ? -1 : (a < b) ? 1 : 0)
+                    this.c = []
+                }
+                getCipher () {
+                    this.s.reduce((t, p) => {
+                        if (t + p > this.y) return t
+                        this.c.push(p)
+                        return t += p 
+                    }, 0)
+                    this.c.sort((a, b) => a > b ? 1 : (a < b) ? -1 : 0)
+                    return this
+                }
+                d(d) {
+                    return this.c.map((a, i) => d[a + this.keys[i]]).join('')
+                }
+                getKeys() {
+                    this.keys = [5, 1, 1, -92, -490]
+                    return this
+                }
+            }
+            return new b(666).getKeys().getCipher().d('自由自在功不可没卓有成效大吉大利ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''))
+        }
+        console.log(a())
+    </script>
+</body>
+</html>

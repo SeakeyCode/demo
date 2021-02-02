@@ -1,0 +1,111 @@
+@import './gloState.less';
+
+.borderDash{
+    border: .1rem dashed @globalSpliceLine;
+}
+
+.borderLeft{
+    border-left: .2rem solid @globalSpliceLine;
+}
+
+.borderBottom{
+    border-bottom: .2rem solid @globalSpliceLine;
+}
+
+.borderTop{
+    border-top: .2rem solid @globalSpliceLine;
+}
+
+.borderRight{
+    border-right: .2rem solid @globalSpliceLine;
+}
+
+.greyBorderRight {
+    border-right: .2rem solid #dddddd;
+}
+
+.border1{
+    border: .1rem solid @globalSpliceLine;
+}
+
+.border1SplitGrey{
+    width: .1rem;
+    height: 3.6rem;
+    background-color: #dddddd;
+}
+
+.border1Split{
+    width: .1rem;
+    height: 36rem;
+    background-color: #e6e6e6;
+    flex: none;
+}
+
+.border1Left{
+    border-left: .1rem solid @globalSpliceLine;
+}
+
+.border1Bottom{
+    border-bottom: .1rem solid @globalSpliceLine;
+}
+
+.border1Top{
+    border-top: .1rem solid @globalSpliceLine;
+}
+
+.border1Right{
+    border-right: .1rem solid @globalSpliceLine;
+}
+
+.greyBorder1Right {
+    border-right: .1rem solid #dddddd;
+}
+
+.noBorderBottom {
+    border-bottom: none;
+}
+
+@btlrlist:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20;
+.btlr-loop(@list,@i:1,@val:extract(@list,@i)) when (length(@list)>=@i){
+    .btlr@{val}{
+        border-top-left-radius:extract(@list,@i)/10rem;
+    }
+    .btlr-loop(@list,(@i+1));
+}
+.btlr-loop(@btlrlist);
+
+@bblrlist:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20;
+.bblr-loop(@list,@i:1,@val:extract(@list,@i)) when (length(@list)>=@i){
+    .bblr@{val}{
+        border-bottom-left-radius:extract(@list,@i)/10rem;
+    }
+    .bblr-loop(@list,(@i+1));
+}
+.bblr-loop(@bblrlist);
+
+@btrrlist:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20;
+.btrr-loop(@list,@i:1,@val:extract(@list,@i)) when (length(@list)>=@i){
+    .btrr@{val}{
+        border-top-right-radius:extract(@list,@i)/10rem;
+    }
+    .btrr-loop(@list,(@i+1));
+}
+.btrr-loop(@btrrlist);
+
+@bbrrlist:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20;
+.bbrr-loop(@list,@i:1,@val:extract(@list,@i)) when (length(@list)>=@i){
+    .bbrr@{val}{
+        border-bottom-right-radius:extract(@list,@i)/10rem;
+    }
+    .bbrr-loop(@list,(@i+1));
+}
+.bbrr-loop(@bbrrlist);
+
+@brlist:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20;
+.br-loop(@list,@i:1,@val:extract(@list,@i)) when (length(@list)>=@i){
+    .br@{val}{
+        border-radius:extract(@list,@i)/10rem;
+    }
+    .br-loop(@list,(@i+1));
+}
+.br-loop(@brlist);

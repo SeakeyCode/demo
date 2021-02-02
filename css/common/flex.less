@@ -1,0 +1,112 @@
+.flex{
+    display:flex;
+}
+.row {
+    flex-direction: row;
+}
+
+.col {
+    flex-direction: column;
+}
+
+.flexCenter{
+    align-items: center;
+    justify-content: center;
+}
+
+.flexStretch{
+    align-items: stretch;
+    justify-content: center;
+}
+
+.flexRight{
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.flexLeft{
+    align-items: center;
+    justify-content: flex-start;
+}
+.flexSpaceB{
+    align-items: center;
+    justify-content: space-between;
+}
+
+.flexSpaceA{
+    align-items: center;
+    justify-content: space-around;
+}
+
+.flexEnd {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+.flexStart{
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+.flexSpace{
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.flexTop{
+    align-items: flex-start;
+}
+.flexBottom{
+    align-items: flex-end;
+}
+
+//flex布局占比函数
+@flexlist:1,2,3,4,5,6,7,8,9,10;
+.flex-loop(@list,@i:1,@val:extract(@list,@i)) when (length(@list)>=@i){
+    .flex@{val}{
+        flex:extract(@list,@i);
+    }
+    .flex-loop(@list,(@i+1));
+}
+.flex-loop(@flexlist);
+
+
+.flexRow{
+    flex-direction: row;
+}
+
+.flexCol{
+    flex-direction: column;
+}
+
+.flexAS{
+    align-items: stretch;
+}
+
+.flexWrap{
+    flex-wrap: wrap;
+}
+
+.flexNoWrap{
+    flex-wrap: nowrap;
+}
+
+.flexAlignCenter{
+    align-items:center;
+}
+.flexJCC{
+    justify-content:center;
+}
+.flexJCB{
+    justify-content:space-between;
+}
+.flexJCA{
+    justify-content:space-around;
+}
+
+.flexACB{
+    align-content: space-between;
+}
+.flexAL{
+    align-items: flex-start;
+}

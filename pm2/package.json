@@ -1,0 +1,17 @@
+{
+  "name": "pm2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pm2": "pm2 start processes.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "express": "^4.17.1"
+  }
+}

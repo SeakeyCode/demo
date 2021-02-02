@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深度优先遍历和广度优先遍历实现</title>
+</head>
+<body>
+    <div class="deep">
+        <div>
+            <span>10</span>
+            <span>11</span>
+            <span>12</span>
+            <span>13</span>
+        </div>
+        <div>
+            <span>2</span>
+        </div>
+        <div>
+            <span>3</span>
+        </div>
+    </div>
+    <script>
+        // 深度优先遍历
+        const deep = document.querySelector('.deep')
+        function deepTraversal (node, nodeList = []) {
+            node && nodeList.push(node)
+            if (node && node.children.length) {
+                Array.from(node.children).forEach(element => {
+                    deepTraversal(element, nodeList)
+                })
+            }
+            return nodeList
+        }
+        console.log(deepTraversal(deep))
+
+        function deepTraversal1 (node) {
+            let stack = []
+            let nodes = []
+            if (node) {
+                stack.push(node)
+                while (stack.length) {
+                    let item = stack.pop()
+                    let children = item.children
+                    nodes.push(item)
+                    Array.from(children).forEach(ele => {
+                        stack.push(ele)
+                    })
+                }
+            }
+            return nodes
+        }
+
+        console.log(deepTraversal1(deep))
+
+        // 广度优先遍历
+
+        function deepTraversal2 (node) {
+            let stack = []
+            let nodes = []
+            if (node) {
+                stack.push(node)
+                while (stack.length) {
+                    let item = stack.shift()
+                    let children = item.children
+                    nodes.push(item)
+                    Array.from(children).forEach(ele => {
+                        stack.push(ele)
+                    })
+                }
+            }
+            return nodes
+        }
+
+        console.log(deepTraversal2(deep))
+    </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.2/vue.min.js"></script>
+  </head>
+  <style>
+    .editor {
+      border: 1px solid red;
+      outline: none;
+      width: 500px;
+      height: 500px;
+      border-radius: 4px;
+    }
+  </style>
+
+  <body>
+    <div contenteditable class="editor">
+      <div data-v-490a54b4="" class="editor-inner" style="line-height: 1.6; width: 800px; font-family: Helvetica">
+        <div data-v-490a54b4="" class="tree-node">
+          <div data-v-490a54b4="" class="tree-item"><div data-v-490a54b4="" class="editContent">碎碎碎生三世水水哒哒哒哒哒</div></div>
+        </div>
+        <div data-v-490a54b4="" class="tree-node">
+          <div data-v-490a54b4="" class="tree-item"><div data-v-490a54b4="" class="editContent">碎碎碎生三世水水哒哒哒哒哒</div></div>
+        </div>
+        <div data-v-490a54b4="" class="tree-node">
+          <div data-v-490a54b4="" class="tree-item"><div data-v-490a54b4="" class="editContent">碎碎碎生三世水水哒哒哒哒哒</div></div>
+        </div>
+        <div data-v-490a54b4="" class="tree-node">
+          <div data-v-490a54b4="" class="tree-item"><div data-v-490a54b4="" class="editContent">碎碎碎生三世水水哒哒哒哒哒</div></div>
+        </div>
+        <div data-v-490a54b4="" class="tree-node">
+          <div data-v-490a54b4="" class="tree-item"><div data-v-490a54b4="" class="editContent">碎碎碎生三世水水哒哒哒哒哒</div></div>
+        </div>
+      </div>
+    </div>
+    <script>
+      /* eslint-disable */
+      new Vue({
+        el: '#app',
+        data: {},
+        mounted() {
+          document.addEventListener('selectionchange', this.handleSelectionChange)
+        },
+        methods: {
+          handleSelectionChange() {
+            const selection = window.getSelection().getRangeAt(0)
+            let startPreviousSibling = selection.startContainer
+            let startPreviousSiblingTxt = ''
+            while (startPreviousSibling) {
+              if (startPreviousSibling?.previousSibling) {
+                startPreviousSibling = startPreviousSibling?.previousSibling
+              } else {
+                startPreviousSibling = startPreviousSibling?.parentNode
+                if (startPreviousSibling.childNodes.length > 1) startPreviousSibling = startPreviousSibling?.previousSibling
+              }
+              if (startPreviousSibling?.className?.includes('editContent') || ![1, 3].includes(startPreviousSibling.nodeType)) startPreviousSibling = null
+              if (startPreviousSibling) startPreviousSiblingTxt += startPreviousSibling?.textContent
+            }
+            console.log(startPreviousSiblingTxt)
+          },
+        },
+      })
+    </script>
+  </body>
+</html>

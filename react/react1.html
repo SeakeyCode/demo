@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      function Welcome(props) {
+        return (
+          <div>
+            {props.msg.length > 0 && <h1>Hello, world {props.msg} </h1>}
+          </div>
+        );
+      }
+
+      // 返回空组件
+      function BackNull(params) {
+        return null;
+      }
+
+      // 列表
+      function ListItem(props) {
+        return (
+          <ul>
+            {props.num.map((v) => (
+              <li key={v}>{v}</li>
+            ))}
+          </ul>
+        );
+      }
+
+      // 受控组件
+      class NameFrom extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = { value: "aaa" };
+        }
+
+        handleChange(e) {
+          this.setState({
+            value: e.target.value,
+          });
+        }
+
+        handleSubmit(e) {
+          console.log(this.state.value);
+          e.preventDefault();
+        }
+
+        render() {
+          return (
+            <div>
+              <form onSubmit={this.handleSubmit.bind(this)}>
+                <label>
+                  名字：
+                  <input
+                    type="text"
+                    vlaue={this.state.value}
+                    onChange={this.handleChange.bind(this)}
+                  />
+                </label>
+                <input type="submit" value="提交" />
+              </form>
+              <form onSubmit={this.handleSubmit.bind(this)}>
+                <label>
+                  选择你喜欢的风味:
+                  <select
+                    value={this.state.value}
+                    onChange={this.handleChange.bind(this)}
+                  >
+                    <option value="grapefruit">葡萄柚</option>
+                    <option value="lime">酸橙</option>
+                    <option value="coconut">椰子</option>
+                    <option value="mango">芒果</option>
+                  </select>
+                </label>
+                <input type="submit" value="提交" />
+              </form>
+              <input value={null} />
+            </div>
+          );
+        }
+      }
+
+      class App extends React.Component {
+        render() {
+          return (
+            <div>
+              <Welcome msg={[1, 2, 3]} />
+              <BackNull />
+              <ListItem num={[1, 2, 3]} />
+              <NameFrom />
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+    <!--
+      Note: this page is a great way to try React but it's not suitable for production.
+      It slowly compiles JSX with Babel in the browser and uses a large development build of React.
+
+      Read this section for a production-ready setup with JSX:
+      https://reactjs.org/docs/add-react-to-a-website.html#add-jsx-to-a-project
+
+      In a larger project, you can use an integrated toolchain that includes JSX instead:
+      https://reactjs.org/docs/create-a-new-react-app.html
+
+      You can also use React without JSX, in which case you can remove Babel:
+      https://reactjs.org/docs/react-without-jsx.html
+    -->
+  </body>
+</html>

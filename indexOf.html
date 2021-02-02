@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用最简洁代码实现indexOf方法</title>
+</head>
+<body>
+    <script>
+        function _indexOf(string, target) {
+            if (typeof string !== 'string') {
+                throw new Error('string only');
+            }
+            let mt = string.match(new RegExp(target, 'i'))
+            return mt ? mt.index : -1;
+        }
+        console.log(_indexOf('1234A56', 'a'))
+    </script>
+</body>
+</html>

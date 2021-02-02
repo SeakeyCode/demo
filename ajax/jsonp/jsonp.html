@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="./jquery-1.8.3.min.js"></script>
+    <script>
+        function SaveData() {
+            $.ajax({
+                type: "get",
+                url: "http://219.142.26.114:9092/mobile/index-page/?p=2",
+                dataType: "jsonp",
+                success: function (data) {
+                    console.log(data)
+                },
+                error: function (xhr, type) {
+                    console.log(xhr, type)
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <input type="button" id="btnAdd" value="Test" onclick="SaveData()" />
+</body>
+</html>

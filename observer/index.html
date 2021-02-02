@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>观察者模式</title>
+  </head>
+  <body>
+    <script>
+      // 分发者
+      class Subject {
+        constructor() {
+          this.state = 0
+          this.observers = []
+        }
+        getState() {
+          return this.state
+        }
+        setState(state) {
+          this.state = state
+          this.notify()
+        }
+        notify() {
+          this.observers.forEach((observer) => {
+            observer.update()
+          })
+        }
+        add(observer) {
+          this.observers.push(observer)
+        }
+      }
+      // 观察者
+      class Observer {
+        constructor(name, subject) {
+          this.name = name
+          this.subject = subject
+          this.subject.add(this)
+        }
+        update() {
+          console.log(`${this.name}`)
+        }
+      }
+      const s = new Subject()
+      const o1 = new Observer('o1', s)
+      const o2 = new Observer('o2', s)
+      const o3 = new Observer('o3', s)
+      const o4 = new Observer('o4', s)
+      s.setState(2)
+      console.log(s)
+    </script>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+//所有padding样式
+@paddingList:0,1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,18,20,24,30,40,48,50,75;
+//padding-top样式
+.pt-loop(@list,@i:1,@val:extract(@list,@i)) when (length(@list)>=@i){
+    .pt@{val}{
+        padding-top:extract(@list,@i)/10rem;
+    }
+    .pt-loop(@list,(@i+1));
+}
+.pt-loop(@paddingList);
+
+//padding-right样式
+.pr-loop(@list,@i:1,@val:extract(@list,@i)) when (length(@list)>=@i){
+    .pr@{val}{
+        padding-right:extract(@list,@i)/10rem;
+    }
+    .pr-loop(@list,(@i+1));
+}
+.pr-loop(@paddingList);
+
+//padding-bottom样式
+.pb-loop(@list,@i:1,@val:extract(@list,@i)) when (length(@list)>=@i){
+    .pb@{val}{
+        padding-bottom:extract(@list,@i)/10rem;
+    }
+    .pb-loop(@list,(@i+1));
+}
+.pb-loop(@paddingList);
+
+//padding-left样式
+.pl-loop(@list,@i:1,@val:extract(@list,@i)) when (length(@list)>=@i){
+    .pl@{val}{
+        padding-left:extract(@list,@i)/10rem;
+    }
+    .pl-loop(@list,(@i+1));
+}
+.pl-loop(@paddingList);
+
+.p-loop(@list,@i:1,@val:extract(@list,@i)) when (length(@list)>=@i){
+    .p@{val}{
+        padding:extract(@list,@i)/10rem;
+    }
+    .p-loop(@list,(@i+1));
+}
+.p-loop(@paddingList);

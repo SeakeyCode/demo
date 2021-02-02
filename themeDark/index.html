@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>切换主题</title>
+</head>
+<style>
+    :root {
+        --text-col: #b53838
+    }
+    :root[theme='dark'] {
+        --text-col: #16cd4b
+    }
+</style>
+<style>
+    .text-col {
+        color: var(--text-col) !important;
+    }
+</style>
+<body>
+<div class="text-col">
+   主题
+</div>
+<script>
+    // 切换主题
+    document.documentElement.setAttribute('theme', 'dark')
+    // 通过js改变css的值
+    document.documentElement.style.setProperty('--text-col', 'red')
+</script>
+</body>
+</html>

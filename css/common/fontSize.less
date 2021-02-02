@@ -1,0 +1,39 @@
+
+//所有字体大小样式，如果是px单位，直接更改就行
+@fslist:0,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36;
+.fs-loop(@list,@i:1,@val:extract(@list,@i)) when (length(@list)>=@i){
+    .fs@{val}{
+        font-size:extract(@list,@i)/10rem;
+    }
+    .fs-loop(@list,(@i+1));
+}
+.fs-loop(@fslist);
+
+//行高样式函数
+@lhlist:0,8,10,14,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50;
+.lh-loop(@list,@i:1,@val:extract(@list,@i)) when (length(@list)>=@i){
+    .lh@{val}{
+        line-height:extract(@list,@i)/10rem;
+    }
+    .lh-loop(@list,(@i+1));
+}
+.lh-loop(@lhlist);
+
+// .fs8{
+//     font-size:0.8rem;
+// }
+// .fs10{
+//     font-size:1rem;
+// }
+// .fs12{
+//     font-size:1.2rem;
+// }
+// .fs13{
+//     font-size:1.3rem;
+// }
+// .fs14{
+//     font-size:1.4rem;
+// }
+
+
+

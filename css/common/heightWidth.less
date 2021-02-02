@@ -1,0 +1,30 @@
+.w100{
+    width:100%;
+}
+.h100{
+    height:100%;
+}
+.wh100{
+    width:100%;
+    height:100%;
+}
+
+@wlist:1,2,3,4,5,6,7,8,9,10,12,14,15,16,18,20,22,24,26,28,30,32,34,36,40,42,44,45,46,48,50,52,54,56,58,60,70;
+.w-loop(@list,@i:1,@val:extract(@list,@i)) when (length(@list)>=@i){
+    .w@{val}{
+        width:extract(@list,@i)/10rem;
+    }
+    .w-loop(@list,(@i+1));
+}
+.w-loop(@hlist);
+
+
+
+@hlist:1,2,3,4,5,6,7,8,9,10,12,14,15,16,18,20,22,24,26,28,30,32,34,36,40,42,44,45,46,48,50,52,54,56,58,60,70,130;
+.h-loop(@list,@i:1,@val:extract(@list,@i)) when (length(@list)>=@i){
+    .h@{val}{
+        height:extract(@list,@i)/10rem;
+    }
+    .h-loop(@list,(@i+1));
+}
+.h-loop(@hlist);
